@@ -19,10 +19,10 @@ def home():
 @app.route("/scrape")
 def scrape():
   
-    mars_dict = mongo.db.mars_dict
+    
     mars_data = scrape_mars.scrape()
     # Update the Mongo database using update and upsert=True
-    mars_dict.update({}, mars_data, upsert=True)
+    mongo.db.mars_dict.update({}, mars_data, upsert=True)
     return redirect("/")
 
 if __name__ == "__main__":

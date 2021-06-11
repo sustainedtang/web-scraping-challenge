@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    h1 {text-align: center;}
+    h4 {text-align: center;}
+    p {text-align: center;}
+    
+    .center {
+  margin-left: auto;
+  margin-right: auto;
+}
+    </style>
+    
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Get Data!</a></p>
+    </div>
+    <h1><strong>Latest Mars News</h1></strong>
+      <h4>{{ mars.news_title }}</h4>
+      <p>{{ mars.news_p }}</p>
+    <h2><strong>Featured Mars Image</h2></strong>
+    <img src="{{ mars.featured_image_url }}" alt="featured mars image">
+    <h2>Mars Facts:</h2>
+    {{ mars.fact_table | safe}}
+    
+  </div>
+  </div>
+  <div class="row">       
+    {% for hem in mars.hemisphere_images %} 
+      <div class="col-6 border">
+      </br>
+            <div>
+              <img src="{{hem.img_url}}" style="width:auto;height:auto">
+            </div>
+
+            <div>
+              <h4> {{hem.title}} </h4>  
+            </div>
+    
+      </div>
+    {% endfor %}
+</div> 
+  
+</div>
+</body>
+
+</html>

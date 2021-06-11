@@ -8,12 +8,9 @@ from splinter import Browser
 import pandas as pd
 from webdriver_manager.chrome import ChromeDriverManager
 
-def init_browser():
+def scrape():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
-
-def scrape():
-    browser = init_browser()
     mars_dict = {}
 
     #News URL Scrape
@@ -42,7 +39,8 @@ def scrape():
     browser.visit(facts_url)
     facts_table = pd.read_html(facts_url, header=0, index_col=0)
     trimmed_table = facts_table[0]
-    trimmed_table
+    trimmed_table = trimmed_table.to_html()
+    trimmed_table.replace('\n','')
 
     #Mars Hemispheres Scrape
     hemi_url = "https://marshemispheres.com/"
@@ -69,12 +67,7 @@ def scrape():
         image_url = image_link.find('li').a['href']
    
         #Dictionary
-        image_dict={}
-        image_dict['title'] = title
-        image_dict['img_url'] = image_url
-    
-
-        hemisphere_image_urls.append(image_dict)
+        hemisphere_image_urls.append({"title": title, "img_url": (hemi_url + image_url)})
     browser.quit()
 
     # Mars 
@@ -87,3 +80,7 @@ def scrape():
     }
 
     return mars_dict
+
+    if __name__ == "__main__":
+        result = scrape()
+        print(result)
