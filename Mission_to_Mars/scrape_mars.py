@@ -30,10 +30,13 @@ def scrape():
     #JPL Image Scrape
     jpl_url = "https://spaceimages-mars.com/"
     browser.visit(jpl_url)
+    html = browser.html
+    soup = bs(html, "html.parser")
     #Find featured image
+    featured_image_text = soup.find('h1', class_='media_feature_title').text
     featured_image_url = browser.find_by_tag('img[class="headerimage fade-in"]')[0]["src"]
     print(featured_image_url)
-
+    print(featured_image_text)
     #Mars Fact Scrape
     facts_url = "https://galaxyfacts-mars.com"
     browser.visit(facts_url)
@@ -75,6 +78,7 @@ def scrape():
         "news_title": news_title,
         "news_p": news_p,
         "featured_image_url": featured_image_url,
+        "featured_image_text": str(featured_image_text),
         "fact_table": str(trimmed_table),
         "hemisphere_images": hemisphere_image_urls
     }
